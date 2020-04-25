@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public router: Router,
+    // tslint:disable-next-line: variable-name
     public _usuarioService: UsuarioService
     ) { }
 
@@ -51,19 +52,24 @@ export class LoginComponent implements OnInit {
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {}, (googleUser) => {
 
-        let profile = googleUser.getBasicProfile();
+        // let profile = googleUser.getBasicProfile();
         let token = googleUser.getAuthResponse().id_token;
-        this._usuarioService.loginGoogle(token)
-                .subscribe(() => {this.router.navigate(['/dashboard']);
-                // window.location.href = '#/dashboard' // corregir problema ingreso con Google
+
+        this._usuarioService.loginGoogle( token )
+              .subscribe( () => {
+               window.location.href = '#/dashboard';
+               this.auth2.disconnect();
               });
+              
+              // window.location.href = '#/dashboard' 
+              // this.router.navigate(['/dashboard'])
+              // });
         console.log(token);
-        console.log(profile);
-        
+
     });
   }
 
-  ingresar(forma: NgForm) {
+ingresar(forma: NgForm) {
 
     if (forma.invalid) {
       return;
