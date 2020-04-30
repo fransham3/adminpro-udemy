@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/service.index';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,7 @@ export class ProfileComponent implements OnInit {
   usuario: Usuario;
 
   imagenSubir: File;
-  imagenTemp: string;
+  imagenTemp: string | ArrayBuffer;
 
   constructor(
     public _usuarioService: UsuarioService
@@ -45,7 +46,7 @@ export class ProfileComponent implements OnInit {
       this.imagenSubir = null;
       return;
     }
-    
+       
 
     this.imagenSubir = archivo;
 
