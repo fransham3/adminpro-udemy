@@ -19,6 +19,8 @@ export class UsuariosComponent implements OnInit {
 
   cargando: boolean = true;
 
+  pags: boolean = false;
+
   constructor(
     public _usuarioService: UsuarioService,
     public _modalUploadService: ModalUploadService
@@ -29,6 +31,10 @@ export class UsuariosComponent implements OnInit {
 
     this._modalUploadService.notificacion
                   .subscribe(resp => this.cargarUsuarios());
+
+    if (this.totalRegistros > 5) {
+      this.pags = true;
+    }
   }
 
   mostrarModal(id: string) {
@@ -43,11 +49,12 @@ export class UsuariosComponent implements OnInit {
     
     this._usuarioService.cargarUsuarios(this.desde)
                   .subscribe((resp: any) => {
-                    console.log(resp);
                     this.totalRegistros = resp.total;
                     this.usuarios = resp.usuarios;
                     this.cargando = false;
                   });
+
+    
   }
 
 
